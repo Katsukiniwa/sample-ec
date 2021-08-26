@@ -25,4 +25,20 @@ export class Product extends Entity<Product> {
     this._category = props.category;
     this._stock = props.stock;
   }
+
+  get name(): string {
+    return this._name;
+  }
+
+  get price(): number {
+    return this._price;
+  }
+
+  get category(): Category {
+    return this._category;
+  }
+
+  get stock(): number {
+    return this._stock;
+  }
 }
