@@ -9,8 +9,14 @@
   "author": "Katsukiniwa",
   "main": "dist/index.js",
   "scripts": {
-    "dev": "ts-node-dev --respawn src/index.ts",
     "build": "tsc",
+    "dev": "ts-node-dev --respawn src/index.ts",
+    "eslint": "eslint src/**/*.ts",
+    "generate": "npx prisma generate",
+    "prettier": "prettier --write 'src/**/*.{js,ts,json}'",
+    "migrate": "npx prisma migrate dev",
+    "seed": "npx prisma db seed --preview-feature",
+    "intro": "npx prisma introspect",
     "start": "node .",
     "test": "jest"
   },

@@ -1,18 +1,11 @@
-const isEntity = (v: any): v is Entity<any> => {
+const isEntity = (v: unknown): v is Entity<unknown> => {
   return v instanceof Entity;
 };
 
 export abstract class Entity<T> {
-  public readonly id: string;
-  public readonly props: T;
+  abstract id: string;
 
-  constructor (props: T, id: string) {
-    this.id = id;
-    this.props = props;
-  }
-
-  public equals (that?: Entity<T>) : boolean {
-
+  public equals (that?: Entity<T>): boolean {
     if (that == null || that == undefined) {
       return false;
     }
