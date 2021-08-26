@@ -2,7 +2,9 @@
   "name": "sample-electronic-commerce",
   "version": "1.0.0",
   "description": "layered architecture with typescript, express",
-  "keywords": ["DDD"],
+  "keywords": [
+    "DDD"
+  ],
   "license": "ISC",
   "author": "Katsukiniwa",
   "main": "dist/index.js",
@@ -27,6 +29,9 @@
     "@types/express": "^4.17.13",
     "@types/multer": "^1.4.7",
     "@types/node": "^16.7.2",
+    "@typescript-eslint/eslint-plugin": "^4.29.3",
+    "@typescript-eslint/parser": "^4.29.3",
+    "eslint": "^7.32.0",
     "jest": "^27.0.6",
     "prisma": "^2.30.0",
     "ts-jest": "^27.0.5",
