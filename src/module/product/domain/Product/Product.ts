@@ -1,4 +1,4 @@
-import { Entity } from "~/common/domain/Entity";
+import { AggregateRoot } from "~/common/domain/AggregateRoot";
 import { Category } from "./Category";
 
 export interface ProductProps {
@@ -9,7 +9,7 @@ export interface ProductProps {
   stock: number;
 }
 
-export class Product extends Entity<Product> {
+export class Product extends AggregateRoot<Product> {
   public readonly id: string;
   private _name: string;
   private _price: number;
