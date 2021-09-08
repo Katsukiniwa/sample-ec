@@ -1,5 +1,7 @@
 import { AggregateRoot } from "~/common/domain/AggregateRoot";
 import { Category } from "./Category";
+import { ProductOption } from "./ProductOption";
+import { StockKeepingUnitProduct } from "./StockKeepingUnitProduct";
 
 export interface ProductProps {
   id: string;
@@ -7,6 +9,8 @@ export interface ProductProps {
   price: number;
   category: Category;
   stock: number;
+  stockKeepingUnits: ProductOption[];
+  stockKeepingUnitProducts: StockKeepingUnitProduct[];
 }
 
 export class Product extends AggregateRoot<Product> {
@@ -15,6 +19,8 @@ export class Product extends AggregateRoot<Product> {
   private _price: number;
   private _category: Category;
   private _stock: number;
+  private _productOptions: ProductOption[];
+  private _stockKeepingUnitProducts: StockKeepingUnitProduct[];
 
   constructor(id: string, props: ProductProps) {
     super();
@@ -24,6 +30,8 @@ export class Product extends AggregateRoot<Product> {
     this._price = props.price;
     this._category = props.category;
     this._stock = props.stock;
+    this._productOptions = props.stockKeepingUnits;
+    this._stockKeepingUnitProducts = props.stockKeepingUnitProducts;
   }
 
   get name(): string {
@@ -40,5 +48,13 @@ export class Product extends AggregateRoot<Product> {
 
   get stock(): number {
     return this._stock;
+  }
+
+  get productOptions(): ProductOption[] {
+    return this._productOptions;
+  }
+
+  get stockKeepingUnitProducts(): StockKeepingUnitProduct[] {
+    return this._stockKeepingUnitProducts;
   }
 }
