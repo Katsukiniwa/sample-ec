@@ -2,7 +2,6 @@ import { Entity } from "~/common/domain/Entity";
 
 export interface StockKeepingUnitProductProps {
   id: string;
-  stockKeepingUnitId: string;
   optionValues: { name: string; value: string }[]
   stock: number;
   price: number;
@@ -18,9 +17,9 @@ export class StockKeepingUnitProduct extends Entity<StockKeepingUnitProduct> {
   private _stock: number;
   private _price: number;
 
-  constructor(id: string, props: StockKeepingUnitProductProps) {
+  constructor(props: StockKeepingUnitProductProps) {
     super();
-    this.id = id;
+    this.id = props.id;
     this._optionValues = props.optionValues;
     this._stock = props.stock;
     this._price = props.price;
