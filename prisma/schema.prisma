@@ -9,3 +9,52 @@ datasource db {
 generator client {
   provider = "prisma-client-js"
 }
+
+model shops {
+  id              String     @id
+  name            String     @unique
+  hashed_password String
+  remember_token  String     @unique
+  created_at      DateTime   @default(now()) @db.Timestamp(6)
+  updaetd_at      DateTime   @default(now()) @db.Timestamp(6)
+  products        products[]
+}
+
+model products {
+  id                          String                        @id
+  name                        String                        @unique
+  shop_id                     String
+  created_at                  DateTime                      @default(now()) @db.Timestamp(6)
+  updaetd_at                  DateTime                      @default(now()) @db.Timestamp(6)
+  shop                        shops                         @relation(fields: [shop_id], references: [id])
+  stock_keeping_unit_products stock_keeping_unit_products[]
+}
+
+model stock_keeping_unit_products {
+  id         String   @id
+  name       String   @unique
+  product_id String
+  price      Int
+  stock      Int
+  created_at DateTime @default(now()) @db.Timestamp(6)
+  updaetd_at DateTime @default(now()) @db.Timestamp(6)
+  product    products @relation(fields: [product_id], references: [id])
+}
+
+model product_options {
+  id                    String                  @id
+  name                  String                  @unique
+  product_id            String
+  created_at            DateTime                @default(now()) @db.Timestamp(6)
+  updaetd_at            DateTime                @default(now()) @db.Timestamp(6)
+  product_option_values product_option_values[]
+}
+
+model product_option_values {
+  id                String          @id
+  value             String          @unique
+  product_option_id String
+  created_at        DateTime        @default(now()) @db.Timestamp(6)
+  updaetd_at        DateTime        @default(now()) @db.Timestamp(6)
+  product_option    product_options @relation(fields: [product_option_id], references: [id])
+}
