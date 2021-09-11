@@ -6,6 +6,7 @@
     "outDir": "dist",
     "strict": true,
     "baseUrl": ".",
+    "typeRoots": ["node_modules/@types", "src/@types"],
     "paths": {
       "~/*": [
         "./src/*"
@@ -15,6 +16,8 @@
       ],
     },
     "lib": ["esnext"],
-    "esModuleInterop": true
+    "esModuleInterop": true,
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true
   }
 }
