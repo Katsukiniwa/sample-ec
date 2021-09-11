@@ -14,4 +14,8 @@ interface TypedRequestBody<T> extends Request {
   body: T;
 }
 
-export { TypedRequest, TypedRequestBody };
+interface TypedRequestCookie<C> extends Request {
+  cookies: C;
+}
+
+export { TypedRequest, TypedRequestBody, TypedRequestCookie };
