@@ -17,7 +17,7 @@ export class CreateProductCommandHandler implements CommandHandler<CreateProduct
       shopId: command.shopId,
       name: command.productName,
       category: command.category,
-      productOptions: command.options.map(o => new ProductOption(o)),
+      productOptions: command.productOptions.map(o => new ProductOption(o)),
       stockKeepingUnitProducts: command.stockKeepingProducts.map(s => new StockKeepingUnitProduct({ id: ulid(), ...s }))
     });
     this.productRepository.store(product);
