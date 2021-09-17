@@ -26,9 +26,7 @@ services:
     restart: always
     build:
       context: .
-      dockerfile: ./docker/app/development/Dockerfile
-    environment:
-      DATABASE_URL: mysql://sample_ec:password@172.17.0.1:3306/sample_ec
+      dockerfile: ./docker/app/Dockerfile
     ports:
       - "8080:8080"
     volumes:

@@ -12,9 +12,7 @@ COPY package*.json /app
 RUN apt-get update -y && \
   apt-get upgrade -y && \
   apt-get install -y \
-  libssl-dev \
-  git \
-  vim
+  libssl-dev
   
 RUN npm install npm@latest && \
   npm install
