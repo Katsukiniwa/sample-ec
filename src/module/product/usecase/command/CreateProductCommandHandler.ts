@@ -12,14 +12,17 @@ export class CreateProductCommandHandler implements CommandHandler<CreateProduct
   ) {}
 
   handle(command: CreateProductCommand): void {
+    const stockKeepingUnitProducts = command.stockKeepingProducts.map(s => new StockKeepingUnitProduct({ id: ulid(), ...s }))
+    
     const product = new Product({
       id: ulid(),
       shopId: command.shopId,
       name: command.productName,
       category: command.category,
       productOptions: command.productOptions.map(o => new ProductOption(o)),
-      stockKeepingUnitProducts: command.stockKeepingProducts.map(s => new StockKeepingUnitProduct({ id: ulid(), ...s }))
+      stockKeepingUnitProducts
     });
+    
     this.productRepository.store(product);
   }
 }

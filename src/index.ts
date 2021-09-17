@@ -6,7 +6,9 @@ const app = express();
 
 const sess = {
   secret: 'keyboard cat',
-  cookie: { secure: false }
+  cookie: { secure: false },
+  resave: true,
+  saveUninitialized: true
 };
 
 app.use(express.json());
@@ -16,6 +18,14 @@ if (app.get('env') === 'production') {
   app.set('trust proxy', 1);
   sess.cookie.secure = true;
 }
+
+app.get('/', (request, response) => {
+  return response.json({ message: 'Hello World' });
+})
+
+app.listen(8080, () => {
+  console.log('listen on 8080');
+})
 
 /**
  * @link https://github.com/expressjs/session

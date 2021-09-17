@@ -21,8 +21,6 @@ module.exports = {
   ],
   rules: {
     '@typescript-eslint/no-inferrable-types': 0,
-    'sort-imports': 0,
-    'import/order': [2, { alphabetize: { order: 'asc' } }],
     'no-shadow': [
       'error',
       { builtinGlobals: false, hoist: 'functions', allow: [] },
