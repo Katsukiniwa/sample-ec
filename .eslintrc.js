@@ -7,7 +7,7 @@ module.exports = {
   parser: '@typescript-eslint/parser',
   parserOptions: {
     sourceType: 'module',
-    ecmaVersion: 2019, // Node.js 12の場合は2019、他のバージョンのNode.jsを利用している場合は場合は適宜変更する
+    ecmaVersion: 2019,
     tsconfigRootDir: __dirname,
     project: ['./tsconfig.eslint.json']
   },
@@ -20,5 +20,12 @@ module.exports = {
     'plugin:@typescript-eslint/recommended-requiring-type-checking',
   ],
   rules: {
+    '@typescript-eslint/no-inferrable-types': 0,
+    'sort-imports': 0,
+    'import/order': [2, { alphabetize: { order: 'asc' } }],
+    'no-shadow': [
+      'error',
+      { builtinGlobals: false, hoist: 'functions', allow: [] },
+    ],
   },
 };
