@@ -12,12 +12,19 @@
     "build": "tsc",
     "dev": "ts-node-dev --respawn src/index.ts",
     "eslint": "eslint src/**/*.ts",
+    "eslint:fix": "eslint src/**/*.ts --fix",
     "generate": "npx prisma generate",
-    "prettier": "prettier --write 'src/**/*.{js,ts,json}'",
+    "prepare": "husky install",
+    "prettier": "prettier --check src/**/*.ts",
+    "prettier:fix": "prettier --write src/**/*.ts",
     "migrate": "npx prisma migrate dev",
     "intro": "npx prisma introspect",
     "start": "node dist/index.js",
     "test": "jest"
+  },
+  "lint-staged": {
+    "*.{js,ts}": "eslint --cache --fix",
+    "*.{js,ts,css,md}": "prettier --write"
   },
   "dependencies": {
     "@prisma/client": "^3.0.2",
@@ -41,7 +48,9 @@
     "@typescript-eslint/eslint-plugin": "^4.31.1",
     "@typescript-eslint/parser": "^4.31.1",
     "eslint": "^7.32.0",
+    "husky": "^7.0.2",
     "jest": "^27.2.0",
+    "lint-staged": "^11.1.2",
     "prisma": "^3.0.2",
     "ts-jest": "^27.0.5",
     "ts-node": "^10.2.1",
