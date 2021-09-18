@@ -57,6 +57,12 @@
     "ts-node-dev": "^1.1.8",
     "typescript": "^4.4.3"
   },
+  "eslintIgnore": [
+    "node_modules",
+    "build/**/*.js",
+    "dist/**/*.js",
+    "prisma/seed.ts"
+  ],
   "prisma": {
     "seed": "ts-node prisma/seed.ts"
   }
