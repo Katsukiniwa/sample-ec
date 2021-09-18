@@ -1,4 +1,4 @@
-import { AggregateRoot } from "~/common/domain/AggregateRoot";
+import { AggregateRoot } from "../../../../../common/domain/AggregateRoot";
 import { Category } from "./Category";
 import { ProductName } from "./ProductName";
 import { ProductOption } from "./ProductOption";

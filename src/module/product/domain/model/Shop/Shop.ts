@@ -1,4 +1,4 @@
-import { AggregateRoot } from "~/common/domain/AggregateRoot";
+import { AggregateRoot } from "../../../../../common/domain/AggregateRoot";
 
 export interface ShopProps {
   id: string;

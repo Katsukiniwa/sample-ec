@@ -1,4 +1,4 @@
-import { Entity } from "~/common/domain/Entity";
+import { Entity } from "../../../../../common/domain/Entity";
 
 export interface StockKeepingUnitProductProps {
   id: string;

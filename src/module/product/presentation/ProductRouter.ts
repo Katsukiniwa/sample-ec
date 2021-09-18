@@ -1,7 +1,7 @@
 import { Router } from 'express';
 import { ProductController } from './ProductController';
 
-const ProductRouter = Router();
+export const ProductRouter = Router();
 
 const productController = new ProductController();
 
