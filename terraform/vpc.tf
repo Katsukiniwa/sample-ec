@@ -8,3 +8,11 @@ resource "aws_vpc" "main" {
     Name = "${local.name}-main"
   }
 }
+
+resource "aws_internet_gateway" "igw" {
+  vpc_id = aws_vpc.main.id
+
+  tags = {
+    Name = "${local.name}-igw"
+  }
+}
