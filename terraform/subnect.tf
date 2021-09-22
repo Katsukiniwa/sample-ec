@@ -27,6 +27,7 @@ resource "aws_subnet" "rds" {
 
   vpc_id            = aws_vpc.main.id
   availability_zone = each.key
+  map_public_ip_on_launch = false
   cidr_block        = cidrsubnet(local.vpc_cidr, 8, length(aws_subnet.public) + length(aws_subnet.ecs) + local.az_conf[each.key].index)
 
   tags = {
