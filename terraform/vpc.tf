@@ -29,3 +29,18 @@ resource "aws_nat_gateway" "nat" {
 
   depends_on = [aws_internet_gateway.igw]
 }
+
+resource "aws_vpc_endpoint" "s3" {
+  vpc_id            = aws_vpc.main.id
+  service_name      = data.aws_vpc_endpoint_service.s3.service_name
+  vpc_endpoint_type = "Gateway"
+
+  tags = {
+    Name = "${local.name}-s3"
+  }
+}
+
+data "aws_vpc_endpoint_service" "s3" {
+  service      = "s3"
+  service_type = "Gateway"
+}

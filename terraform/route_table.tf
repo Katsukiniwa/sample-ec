@@ -49,12 +49,12 @@ resource "aws_route_table_association" "ecs" {
   route_table_id = aws_route_table.ecs[each.key].id
 }
 
-# resource "aws_vpc_endpoint_route_table_association" "ecs_s3" {
-#   for_each = local.availability_zones
+resource "aws_vpc_endpoint_route_table_association" "ecs_s3" {
+  for_each = local.availability_zones
 
-#   vpc_endpoint_id = aws_vpc_endpoint.s3.id
-#   route_table_id  = aws_route_table.ecs[each.key].id
-# }
+  vpc_endpoint_id = aws_vpc_endpoint.s3.id
+  route_table_id  = aws_route_table.ecs[each.key].id
+}
 
 resource "aws_route_table" "rds" {
   for_each = local.availability_zones
@@ -71,8 +71,14 @@ resource "aws_route" "rds" {
 
   route_table_id         = aws_route_table.rds[each.key].id
   destination_cidr_block = "0.0.0.0/0"
-  local_gateway_id = "10.0.0.0/16"
-  # nat_gateway_id         = aws_nat_gateway.nat[each.key].id
+  nat_gateway_id         = aws_nat_gateway.nat[each.key].id
+}
+
+resource "aws_route_table_association" "rds" {
+  for_each = local.availability_zones
+
+  subnet_id      = aws_subnet.rds[each.key].id
+  route_table_id = aws_route_table.rds[each.key].id
 }
 
 resource "aws_route_table" "codebuild" {
@@ -90,19 +96,19 @@ resource "aws_route" "codebuild" {
 
   route_table_id         = aws_route_table.codebuild[each.key].id
   destination_cidr_block = "0.0.0.0/0"
-  local_gateway_id = "10.0.0.0/16"
-  # nat_gateway_id         = aws_nat_gateway.nat[each.key].id
+  nat_gateway_id         = aws_nat_gateway.nat[each.key].id
 }
 
-# resource "aws_route_table_association" "codebuild" {
-#   for_each = local.availability_zones
+resource "aws_route_table_association" "codebuild" {
+  for_each = local.availability_zones
 
-#   subnet_id      = aws_subnet.codebuild[each.key].id
-#   route_table_id = aws_route_table.codebuild[each.key].id
-# }
-# resource "aws_vpc_endpoint_route_table_association" "codebuild_s3" {
-#   for_each = local.availability_zones
+  subnet_id      = aws_subnet.codebuild[each.key].id
+  route_table_id = aws_route_table.codebuild[each.key].id
+}
 
-#   vpc_endpoint_id = aws_vpc_endpoint.s3.id
-#   route_table_id  = aws_route_table.codebuild[each.key].id
-# }
+resource "aws_vpc_endpoint_route_table_association" "codebuild_s3" {
+  for_each = local.availability_zones
+
+  vpc_endpoint_id = aws_vpc_endpoint.s3.id
+  route_table_id  = aws_route_table.codebuild[each.key].id
+}
