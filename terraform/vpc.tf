@@ -16,3 +16,16 @@ resource "aws_internet_gateway" "igw" {
     Name = "${local.name}-igw"
   }
 }
+
+resource "aws_nat_gateway" "nat" {
+  for_each = local.availability_zones
+
+  allocation_id = aws_eip.nat[each.key].id
+  subnet_id     = aws_subnet.public[each.key].id
+
+  tags = {
+    Name = "${local.name}-nat-${local.az_conf[each.key].short_name}"
+  }
+
+  depends_on = [aws_internet_gateway.igw]
+}
