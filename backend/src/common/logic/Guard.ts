@@ -5,7 +5,7 @@ export interface IGuardResult {
 }
 
 export interface IGuardArgument {
-  argument: any;
+  argument: unknown;
   argumentName: string;
 }
 
@@ -20,7 +20,7 @@ export class Guard {
     return { succeeded: true };
   }
 
-  public static againstNullOrUndefined (argument: any, argumentName: string): IGuardResult {
+  public static againstNullOrUndefined (argument: unknown, argumentName: string): IGuardResult {
     if (argument === null || argument === undefined) {
       return { succeeded: false, message: `${argumentName} is null or undefined` }
     } else {
@@ -37,7 +37,7 @@ export class Guard {
     return { succeeded: true }
   }
 
-  public static isOneOf (value: any, validValues: any[], argumentName: string) : IGuardResult {
+  public static isOneOf (value: unknown, validValues: unknown[], argumentName: string) : IGuardResult {
     let isValid = false;
     for (const validValue of validValues) {
       if (value === validValue) {
