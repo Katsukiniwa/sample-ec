@@ -8,6 +8,7 @@ export interface ProductProps {
   id: string;
   shopId: string;
   name: string;
+  description: string;
   category: Category;
   productOptions: ProductOption[];
   stockKeepingUnitProducts: StockKeepingUnitProduct[];
@@ -17,6 +18,7 @@ export class Product extends AggregateRoot<Product> {
   public readonly id: string;
   private _shopId: string;
   private _name: ProductName;
+  private _description: string;
   private _category: Category;
   private _productOptions: ProductOption[];
   private _stockKeepingUnitProducts: StockKeepingUnitProduct[];
@@ -27,6 +29,7 @@ export class Product extends AggregateRoot<Product> {
     this.id = props.id;
     this._shopId = props.shopId;
     this._name = new ProductName({ name: props.name });
+    this._description = props.description;
     this._category = props.category;
     this._productOptions = props.productOptions;
     this._stockKeepingUnitProducts = props.stockKeepingUnitProducts;
@@ -34,6 +37,10 @@ export class Product extends AggregateRoot<Product> {
 
   get name(): ProductName {
     return this._name;
+  }
+
+  get description(): string {
+    return this._description;
   }
 
   get shopId(): string {

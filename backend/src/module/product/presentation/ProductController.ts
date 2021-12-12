@@ -11,6 +11,7 @@ import { CreateProductCommandHandler } from "../usecase/command/CreateProductCom
 
 interface CreateProductBodyParams {
   productName: string;
+  productDescription: string;
   category: Category;
   productOptions: ProductOptions;
   stockKeepingProducts: StockKeepingProducts;
@@ -45,6 +46,7 @@ export class ProductController {
     const command = new CreateProductCommand(
       shop.id,
       request.body.productName,
+      request.body.productDescription,
       request.body.category,
       request.body.productOptions,
       request.body.stockKeepingProducts,

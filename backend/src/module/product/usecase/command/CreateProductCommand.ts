@@ -6,6 +6,7 @@ export type StockKeepingProducts = { name: string, price: number, stock: number,
 export class CreateProductCommand {
   public shopId: string;
   public productName: string;
+  public productDescription: string;
   public category: Category;
   
   /**
@@ -28,12 +29,14 @@ export class CreateProductCommand {
   constructor(
     shopId: string,
     productName: string,
+    productDescription: string,
     category: Category,
     productOptions: ProductOptions,
     stockKeepingProducts: StockKeepingProducts
   ) {
     this.shopId = shopId;
     this.productName = productName;
+    this.productDescription = productDescription;
     this.category = category;
     this.productOptions = productOptions;
     this.stockKeepingProducts = stockKeepingProducts;

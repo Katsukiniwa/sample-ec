@@ -18,6 +18,7 @@ export class CreateProductCommandHandler implements CommandHandler<CreateProduct
       id: ulid(),
       shopId: command.shopId,
       name: command.productName,
+      description: command.productDescription,
       category: command.category,
       productOptions: command.productOptions.map(o => new ProductOption(o)),
       stockKeepingUnitProducts
