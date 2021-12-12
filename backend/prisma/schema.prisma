@@ -28,17 +28,29 @@ model products {
   updated_at                  DateTime                      @default(now()) @db.Timestamp(6)
   shop                        shops                         @relation(fields: [shop_id], references: [id])
   stock_keeping_unit_products stock_keeping_unit_products[]
+  options                     product_options[]
 }
 
 model stock_keeping_unit_products {
-  id         String   @id
-  name       String   @unique
-  product_id String
-  price      Int
-  stock      Int
-  created_at DateTime @default(now()) @db.Timestamp(6)
-  updated_at DateTime @default(now()) @db.Timestamp(6)
-  product    products @relation(fields: [product_id], references: [id])
+  id            String                                     @id
+  name          String                                     @unique
+  product_id    String
+  price         Int
+  stock         Int
+  created_at    DateTime                                   @default(now()) @db.Timestamp(6)
+  updated_at    DateTime                                   @default(now()) @db.Timestamp(6)
+  product       products                                   @relation(fields: [product_id], references: [id])
+  option_values stock_keeping_unit_product_option_values[]
+}
+
+model stock_keeping_unit_product_option_values {
+  id                            String                      @id @unique
+  stock_keeping_unit_product_id String
+  product_option_value_id       String
+  created_at                    DateTime                    @default(now()) @db.Timestamp(6)
+  updated_at                    DateTime                    @default(now()) @db.Timestamp(6)
+  stock_keeping_unit_product    stock_keeping_unit_products @relation(fields: [stock_keeping_unit_product_id], references: [id])
+  option_value                  product_option_values       @relation(fields: [product_option_value_id], references: [id])
 }
 
 model product_options {
@@ -47,14 +59,16 @@ model product_options {
   product_id            String
   created_at            DateTime                @default(now()) @db.Timestamp(6)
   updated_at            DateTime                @default(now()) @db.Timestamp(6)
+  product               products                @relation(fields: [product_id], references: [id])
   product_option_values product_option_values[]
 }
 
 model product_option_values {
-  id                String          @id
-  value             String          @unique
-  product_option_id String
-  created_at        DateTime        @default(now()) @db.Timestamp(6)
-  updated_at        DateTime        @default(now()) @db.Timestamp(6)
-  product_option    product_options @relation(fields: [product_option_id], references: [id])
+  id                                       String                                     @id
+  value                                    String                                     @unique
+  product_option_id                        String
+  created_at                               DateTime                                   @default(now()) @db.Timestamp(6)
+  updated_at                               DateTime                                   @default(now()) @db.Timestamp(6)
+  product_option                           product_options                            @relation(fields: [product_option_id], references: [id])
+  stock_keeping_unit_product_option_values stock_keeping_unit_product_option_values[]
 }
