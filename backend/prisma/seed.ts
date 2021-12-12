@@ -28,6 +28,7 @@ async function main() {
           create: {
             id: ulid(),
             name: "大人用パーカー",
+            description: "着心地の良いパーカーです",
             options: {
               createMany: {
                 data: [

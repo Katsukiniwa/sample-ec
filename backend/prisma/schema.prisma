@@ -23,6 +23,7 @@ model shops {
 model products {
   id                          String                        @id
   name                        String                        @unique
+  description                 String                        @default("")
   shop_id                     String
   created_at                  DateTime                      @default(now()) @db.Timestamp(6)
   updated_at                  DateTime                      @default(now()) @db.Timestamp(6)
@@ -32,15 +33,25 @@ model products {
 }
 
 model stock_keeping_unit_products {
-  id            String                                     @id
-  name          String                                     @unique
-  product_id    String
-  price         Int
-  stock         Int
-  created_at    DateTime                                   @default(now()) @db.Timestamp(6)
-  updated_at    DateTime                                   @default(now()) @db.Timestamp(6)
-  product       products                                   @relation(fields: [product_id], references: [id])
-  option_values stock_keeping_unit_product_option_values[]
+  id                  String                                     @id
+  name                String                                     @unique
+  product_id          String
+  price               Int
+  stock               Int
+  created_at          DateTime                                   @default(now()) @db.Timestamp(6)
+  updated_at          DateTime                                   @default(now()) @db.Timestamp(6)
+  product             products                                   @relation(fields: [product_id], references: [id])
+  option_values       stock_keeping_unit_product_option_values[]
+  stock_change_events stock_change_events[]
+}
+
+model stock_change_events {
+  id                            String                      @id @unique
+  stock_keeping_unit_product_id String
+  change_amount                 Int
+  stock_keeping_unit_product    stock_keeping_unit_products @relation(fields: [stock_keeping_unit_product_id], references: [id])
+  created_at                    DateTime                    @default(now()) @db.Timestamp(6)
+  updated_at                    DateTime                    @default(now()) @db.Timestamp(6)
 }
 
 model stock_keeping_unit_product_option_values {
