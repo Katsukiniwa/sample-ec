@@ -17,8 +17,8 @@
     "prepare": "cd .. && husky install backend/.husky",
     "prettier": "prettier --check src/**/*.ts",
     "prettier:fix": "prettier --write src/**/*.ts",
-    "migrate": "npx prisma migrate dev",
-    "intro": "npx prisma introspect",
+    "prisma:migrate": "npx prisma migrate dev",
+    "prisma:introspect": "npx prisma introspect",
     "start": "node dist/index.js",
     "test": "jest"
   },
