@@ -1,5 +1,6 @@
 import { AggregateRoot } from "../../../../../common/domain/AggregateRoot";
 import { Category } from "./Category";
+import { StockChangeEvent } from "./event/StockChangeEvent";
 import { ProductName } from "./ProductName";
 import { ProductOption } from "./ProductOption";
 import { StockKeepingUnitProduct } from "./StockKeepingUnitProduct";
@@ -57,5 +58,12 @@ export class Product extends AggregateRoot<Product> {
 
   get stockKeepingUnitProducts(): StockKeepingUnitProduct[] {
     return this._stockKeepingUnitProducts;
+  }
+
+  public changeStock(stockKeepUnitProductId: string, stock: number): void {
+    const stockKeepUnitProduct = this._stockKeepingUnitProducts.find(e => e.id == stockKeepUnitProductId)
+    if (!stockKeepUnitProduct) throw new Error('not found')
+    stockKeepUnitProduct.changeStock(stock)
+    this.addDomainEvent(new StockChangeEvent(stockKeepUnitProduct, stock - stockKeepUnitProduct.stock))
   }
 }

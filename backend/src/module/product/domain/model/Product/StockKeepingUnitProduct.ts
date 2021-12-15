@@ -36,4 +36,8 @@ export class StockKeepingUnitProduct extends Entity<StockKeepingUnitProduct> {
   get optionValues(): { name: string; value: string }[] {
     return this._optionValues;
   }
+
+  public changeStock(newStock: number): void {
+    this._stock = newStock;
+  }
 }
