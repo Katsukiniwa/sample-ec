@@ -1,5 +1,6 @@
+# プライベートバケットの定義
 resource "aws_s3_bucket" "private" {
-  bucket = "sample-ec-private-bucket"
+  bucket = "private-sample-ec"
 
   # バージョニングを有効にすることでいつでも以前のバージョンへ復元可能になる
   versioning {
@@ -17,6 +18,7 @@ resource "aws_s3_bucket" "private" {
   }
 }
 
+# ブロックパブリックアクセスの定義
 resource "aws_s3_bucket_public_access_block" "private" {
   bucket = aws_s3_bucket.private.id
   block_public_acls = true
@@ -25,8 +27,10 @@ resource "aws_s3_bucket_public_access_block" "private" {
   restrict_public_buckets = true
 }
 
+# パブリックバケットの定義
 resource "aws_s3_bucket" "public" {
-  bucket = "sample-ec-public-bucket"
+  bucket = "public-sample-ec"
+  acl = "public-read"
 
   cors_rule {
     # allowed_origins = ["https://example.com"]
@@ -35,4 +39,17 @@ resource "aws_s3_bucket" "public" {
     max_age_seconds = 3000
   }
   
+}
+
+# ログバケットの定義
+resource "aws_s3_bucket" "alb_log" {
+  bucket = "alb-log-sample-ec"
+
+  lifecycle_rule {
+    enabled = true
+
+    expiration {
+      days = "180"
+    }
+  }
 }
