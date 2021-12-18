@@ -4,7 +4,7 @@ resource "aws_s3_bucket" "private" {
 
   # バージョニングを有効にすることでいつでも以前のバージョンへ復元可能になる
   versioning {
-    enable = true
+    enabled = true
   }
 
   # 暗号化を有効にするオプション
@@ -33,7 +33,7 @@ resource "aws_s3_bucket" "public" {
   acl = "public-read"
 
   cors_rule {
-    # allowed_origins = ["https://example.com"]
+    allowed_origins = ["https://example.com"]
     allowed_methods = ["GET"]
     allowed_headers = ["*"]
     max_age_seconds = 3000
@@ -68,7 +68,7 @@ data "aws_iam_policy_document" "alb_log" {
 
     principals {
       type = "AWS"
-      identifiers = "582318560864" # アカウントIDはリージョン毎に異なる
+      identifiers = ["582318560864"] # アカウントIDはリージョン毎に異なる
     }
   }
 }
