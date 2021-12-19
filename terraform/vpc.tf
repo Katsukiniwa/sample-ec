@@ -95,7 +95,7 @@ resource "aws_subnet" "private_1" {
   map_public_ip_on_launch = false # プライベートサブネットではパブリックIPアドレスの割り当ては不要なのでfalseに設定する
 }
 
-# ルートテーブルとの関連付け
+# プライベートルートテーブル
 resource "aws_route_table" "private" {
   vpc_id = aws_vpc.example.id
 
@@ -104,6 +104,7 @@ resource "aws_route_table" "private" {
   }
 }
 
+# プライベートルートテーブルとの関連付け
 resource "aws_route_table_association" "private_0" {
   subnet_id = aws_subnet.private_0.id
   route_table_id = aws_route_table.private_0.id
@@ -112,4 +113,30 @@ resource "aws_route_table_association" "private_0" {
 resource "aws_route_table_association" "private_1" {
   subnet_id = aws_subnet.private_1.id
   route_table_id = aws_route_table.private_1.id
+}
+
+# セキュリティグループ
+resource "aws_security_group" "example" {
+  name = "example"
+  vpc_id = aws_vpc.example.id
+}
+
+# セキュリティグループ(インバウンド)
+resource "aws_security_group_rule" "ingress_example" {
+  type = "ingress"
+  from_port = "80"
+  to_port = "80"
+  protocol = "tcp"
+  cidr_blocks = ["0.0.0.0/0"]
+  security_group_id = aws_security_group.example.id
+}
+
+# # セキュリティグループ(アウトバウンド)
+resource "aws_security_group_rule" "egress_example" {
+  type = "egress"
+  from_port = 0
+  to_port = 0
+  protocol = "-1"
+  cidr_blocks = ["0.0.0.0/0"]
+  security_group_id = aws_security_group.example.id
 }
