@@ -20,17 +20,17 @@ resource "aws_s3_bucket" "private" {
 
 # ブロックパブリックアクセスの定義
 resource "aws_s3_bucket_public_access_block" "private" {
-  bucket = aws_s3_bucket.private.id
-  block_public_acls = true
-  block_public_policy = true
-  ignore_public_acls = true
+  bucket                  = aws_s3_bucket.private.id
+  block_public_acls       = true
+  block_public_policy     = true
+  ignore_public_acls      = true
   restrict_public_buckets = true
 }
 
 # パブリックバケットの定義
 resource "aws_s3_bucket" "public" {
   bucket = "public-sample-ec"
-  acl = "public-read"
+  acl    = "public-read"
 
   cors_rule {
     allowed_origins = ["https://example.com"]
@@ -38,7 +38,7 @@ resource "aws_s3_bucket" "public" {
     allowed_headers = ["*"]
     max_age_seconds = 3000
   }
-  
+
 }
 
 # ログバケットの定義
@@ -62,12 +62,12 @@ resource "aws_s3_bucket_policy" "alb_log" {
 
 data "aws_iam_policy_document" "alb_log" {
   statement {
-    effect = "Allow"
-    actions = ["s3:PutObject"]
+    effect    = "Allow"
+    actions   = ["s3:PutObject"]
     resources = ["arn:aws:s3:::${aws_s3_bucket.alb_log.id}/*"]
 
     principals {
-      type = "AWS"
+      type        = "AWS"
       identifiers = ["582318560864"] # アカウントIDはリージョン毎に異なる
     }
   }
