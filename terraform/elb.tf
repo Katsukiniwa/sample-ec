@@ -63,7 +63,7 @@ resource "aws_lb_listener" "http" {
     type = "fixed-response"
 
     fixed_response {
-      content-type = "text/plain"
+      content_type = "text/plain"
       message_body = "これは[HTTP]です"
       status_code  = "200"
     }
