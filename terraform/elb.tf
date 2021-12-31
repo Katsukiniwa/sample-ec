@@ -3,7 +3,7 @@ resource "aws_lb" "example" {
   load_balancer_type         = "application" # albを指定
   internal                   = false         # インターネット向けを指定
   idle_timeout               = 60
-  enable_deletion_protection = true # 削除保護を有効化
+  # enable_deletion_protection = true # 削除保護を有効化
 
   subnets = [
     aws_subnet.public_0.id,
