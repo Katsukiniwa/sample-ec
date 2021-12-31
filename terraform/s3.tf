@@ -16,6 +16,9 @@ resource "aws_s3_bucket" "private" {
       }
     }
   }
+
+  # 強制削除
+  force_destroy = true
 }
 
 # ブロックパブリックアクセスの定義
@@ -39,6 +42,7 @@ resource "aws_s3_bucket" "public" {
     max_age_seconds = 3000
   }
 
+  force_destroy = true
 }
 
 # ログバケットの定義
@@ -52,6 +56,8 @@ resource "aws_s3_bucket" "alb_log" {
       days = "180"
     }
   }
+
+  force_destroy = true
 }
 
 # バケットポリシーの定義
