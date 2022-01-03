@@ -70,7 +70,7 @@ resource "aws_lb_listener" "http" {
   }
 }
 
-# HTTPS用ロードバランサ
+# HTTPSリスナー
 
 resource "aws_lb_listener" "https" {
   load_balancer_arn = aws_lb.example.arn
@@ -90,21 +90,25 @@ resource "aws_lb_listener" "https" {
   }
 }
 
-# HTTPSへのリダイレクト
+# # HTTPSへのリダイレクト
 
-resource "alb_elb_listener" "redirect_to_https" {
+resource "aws_lb_listener" "redirect_http_to_https" {
   load_balancer_arn = aws_lb.example.arn
   port = "8080"
   protocol = "HTTP"
 
   default_action {
     type = "redirect"
-    protocol = "HTTPS"
-    status_code = "HTTP_301"
+
+    redirect {
+      port = "443"
+      protocol = "HTTPS"
+      status_code = "HTTP_301"
+    }
   }
 }
 
-# ターゲットグループ
+# # ターゲットグループ
 
 resource "aws_lb_target_group" "example" {
   name = "example"
@@ -128,7 +132,7 @@ resource "aws_lb_target_group" "example" {
   depends_on = [aws_lb.example]
 }
 
-# リスナールール
+# # リスナールール
 
 resource "aws_lb_listener_rule" "example" {
   listener_arn = aws_lb_listener.https.arn
@@ -136,11 +140,12 @@ resource "aws_lb_listener_rule" "example" {
 
   action {
     type = "forward"
-    target_group_arn = aws_lb_listener_group.example.arn
+    target_group_arn = aws_lb_target_group.example.arn
   }
 
   condition {
-    field = "path-pattern"
-    values = ["/*"]
+    path_pattern {
+      values = ["/*"]
+    }
   }
 }
