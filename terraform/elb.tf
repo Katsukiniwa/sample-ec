@@ -1,8 +1,8 @@
 resource "aws_lb" "example" {
-  name                       = "example"
-  load_balancer_type         = "application" # albを指定
-  internal                   = false         # インターネット向けを指定
-  idle_timeout               = 60
+  name               = "example"
+  load_balancer_type = "application" # albを指定
+  internal           = false         # インターネット向けを指定
+  idle_timeout       = 60
   # enable_deletion_protection = true # 削除保護を有効化
 
   subnets = [
@@ -74,10 +74,10 @@ resource "aws_lb_listener" "http" {
 
 resource "aws_lb_listener" "https" {
   load_balancer_arn = aws_lb.example.arn
-  port = "443"
-  protocol = "HTTPS"
-  certificate_arn = aws_acm_certificate.example.arn
-  ssl_policy = "ELBSecurityPolicy-2016-08"
+  port              = "443"
+  protocol          = "HTTPS"
+  certificate_arn   = aws_acm_certificate.example.arn
+  ssl_policy        = "ELBSecurityPolicy-2016-08"
 
   default_action {
     type = "fixed-response"
@@ -85,7 +85,7 @@ resource "aws_lb_listener" "https" {
     fixed_response {
       content_type = "text/plain"
       message_body = "これは[HTTPS]です"
-      status_code = "200"
+      status_code  = "200"
     }
   }
 }
@@ -94,15 +94,15 @@ resource "aws_lb_listener" "https" {
 
 resource "aws_lb_listener" "redirect_http_to_https" {
   load_balancer_arn = aws_lb.example.arn
-  port = "8080"
-  protocol = "HTTP"
+  port              = "8080"
+  protocol          = "HTTP"
 
   default_action {
     type = "redirect"
 
     redirect {
-      port = "443"
-      protocol = "HTTPS"
+      port        = "443"
+      protocol    = "HTTPS"
       status_code = "HTTP_301"
     }
   }
@@ -111,22 +111,22 @@ resource "aws_lb_listener" "redirect_http_to_https" {
 # # ターゲットグループ
 
 resource "aws_lb_target_group" "example" {
-  name = "example"
-  target_type = "ip"
-  vpc_id = aws_vpc.example.id
-  port = "80"
-  protocol = "HTTP"
+  name                 = "example"
+  target_type          = "ip"
+  vpc_id               = aws_vpc.example.id
+  port                 = "80"
+  protocol             = "HTTP"
   deregistration_delay = 300
 
   health_check {
-    path = "/"
-    healthy_threshold = 5
+    path                = "/"
+    healthy_threshold   = 5
     unhealthy_threshold = 2
-    timeout = 5
-    interval = 30
-    matcher = 200
-    port = "traffic-port"
-    protocol = "HTTP"
+    timeout             = 5
+    interval            = 30
+    matcher             = 200
+    port                = "traffic-port"
+    protocol            = "HTTP"
   }
 
   depends_on = [aws_lb.example]
@@ -136,10 +136,10 @@ resource "aws_lb_target_group" "example" {
 
 resource "aws_lb_listener_rule" "example" {
   listener_arn = aws_lb_listener.https.arn
-  priority = 100
+  priority     = 100
 
   action {
-    type = "forward"
+    type             = "forward"
     target_group_arn = aws_lb_target_group.example.arn
   }
 
