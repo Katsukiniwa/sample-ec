@@ -89,3 +89,17 @@ resource "aws_lb_listener" "https" {
     }
   }
 }
+
+# HTTPSへのリダイレクト
+
+resource "alb_elb_listener" "redirect_to_https" {
+  load_balancer_arn = aws_lb.example.arn
+  port = "8080"
+  protocol = "HTTP"
+
+  default_action {
+    type = "redirect"
+    protocol = "HTTPS"
+    status_code = "HTTP_301"
+  }
+}
