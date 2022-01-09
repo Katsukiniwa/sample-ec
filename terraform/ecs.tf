@@ -8,7 +8,7 @@ resource "aws_ecs_task_definition" "example" {
   memory                   = "512"
   network_mode             = "awsvpc"
   requires_compatibilities = ["FARGATE"]
-  container_definitions    = file("./container_definition.json")
+  container_definitions    = file("./files/container_definition.json")
   execution_role_arn = module.ecs_task_execution_role.iam_role_arn
 }
 
@@ -52,11 +52,11 @@ module "nginx_sg" {
 
 # IAMポリシーデータソース
 data "aws_iam_policy" "ecs_task_execution_role_policy" {
-  arm = "arn:aws:iam::aws:policy/service-role/AmazonECSTaskExecutionRolePolicy"
+  arn = "arn:aws:iam::aws:policy/service-role/AmazonECSTaskExecutionRolePolicy"
 }
 
 # ポリシードキュメント
-data "aws_iam_policy_attachment" "ecs_task_execution" {
+data "aws_iam_policy_document" "ecs_task_execution" {
   # 既存のポリシーを継承
   source_json = data.aws_iam_policy.ecs_task_execution_role_policy.policy
 
