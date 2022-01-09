@@ -48,3 +48,28 @@ module "nginx_sg" {
   port        = 80
   cidr_blocks = [aws_vpc.example.cidr_block]
 }
+
+# IAMポリシーデータソース
+data "aws_iam_policy" "ecs_task_execution_role_policy" {
+  arm = "arn:aws:iam::aws:policy/service-role/AmazonECSTaskExecutionRolePolicy"
+}
+
+# ポリシードキュメント
+data "aws_iam_policy_attachment" "ecs_task_execution" {
+  # 既存のポリシーを継承
+  source_json = data.aws_iam_policy.ecs_task_execution_role_policy.policy
+
+  statement {
+    effect = "Allow"
+    actions = ["ssm:GetParameters", "kms:Decrypt"]
+    resources = ["*"]
+  }
+}
+
+# ECSタスク実行IAMロール
+module "ecs_task_execution_role" {
+  source = "./iam_role"
+  name = "ecs-task-execution"
+  identifier = "ecs-tasks.amazonaws.com"
+  policy = data.aws_iam_policy_document.ecs_task_execution.json
+}
