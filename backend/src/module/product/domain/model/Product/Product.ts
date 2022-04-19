@@ -11,6 +11,7 @@ export interface ProductProps {
   name: string;
   description: string;
   category: Category;
+  price: number;
   productOptions: ProductOption[];
   stockKeepingUnitProducts: StockKeepingUnitProduct[];
 }
@@ -21,6 +22,7 @@ export class Product extends AggregateRoot<Product> {
   private _name: ProductName;
   private _description: string;
   private _category: Category;
+  private _price: number;
   private _productOptions: ProductOption[];
   private _stockKeepingUnitProducts: StockKeepingUnitProduct[];
 
@@ -32,6 +34,7 @@ export class Product extends AggregateRoot<Product> {
     this._name = new ProductName({ name: props.name });
     this._description = props.description;
     this._category = props.category;
+    this._price = props.price;
     this._productOptions = props.productOptions;
     this._stockKeepingUnitProducts = props.stockKeepingUnitProducts;
   }
@@ -52,6 +55,10 @@ export class Product extends AggregateRoot<Product> {
     return this._category;
   }
 
+  get price(): number {
+    return this._price;
+  }
+
   get productOptions(): ProductOption[] {
     return this._productOptions;
   }
@@ -61,9 +68,16 @@ export class Product extends AggregateRoot<Product> {
   }
 
   public changeStock(stockKeepUnitProductId: string, stock: number): void {
-    const stockKeepUnitProduct = this._stockKeepingUnitProducts.find(e => e.id == stockKeepUnitProductId)
-    if (!stockKeepUnitProduct) throw new Error('not found')
-    stockKeepUnitProduct.changeStock(stock)
-    this.addDomainEvent(new StockChangeEvent(stockKeepUnitProduct, stock - stockKeepUnitProduct.stock))
+    const stockKeepUnitProduct = this._stockKeepingUnitProducts.find(
+      (e) => e.id == stockKeepUnitProductId
+    );
+    if (!stockKeepUnitProduct) throw new Error("not found");
+    stockKeepUnitProduct.changeStock(stock);
+    this.addDomainEvent(
+      new StockChangeEvent(
+        stockKeepUnitProduct,
+        stock - stockKeepUnitProduct.stock
+      )
+    );
   }
 }
