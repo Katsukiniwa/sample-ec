@@ -5,15 +5,15 @@ import { Result } from "./Result";
 import { UseCaseError } from "./UseCaseError";
 
 export class UnexpectedError extends Result<UseCaseError> {
-  public constructor (err: any) {
+  public constructor(err: any) {
     super(false, {
       message: `An unexpected error occurred.`,
-      error: err
-    } as UseCaseError)
+      error: err,
+    } as UseCaseError);
     console.error(err);
   }
 
-  public static create (error: any): UnexpectedError {
+  public static create(error: any): UnexpectedError {
     return new UnexpectedError(error);
   }
 }

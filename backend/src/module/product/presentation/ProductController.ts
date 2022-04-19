@@ -6,7 +6,11 @@ import { ShopAuthenticationService } from "../domain/service/ShopAuthenticationS
 import { CookieShopAuthenticationService } from "../infrastructure/authentication/CookieShopAuthenticationService";
 import { PrismaGetProductsQueryHandler } from "../infrastructure/query/PrimsaGetProductsQueryHandler";
 import { PrismaProductRepository } from "../infrastructure/repository/PrismaProductRepository";
-import { CreateProductCommand, ProductOptions, StockKeepingProducts } from "../usecase/command/CreateProductCommand";
+import {
+  CreateProductCommand,
+  ProductOptions,
+  StockKeepingProducts,
+} from "../usecase/command/CreateProductCommand";
 import { CreateProductCommandHandler } from "../usecase/command/CreateProductCommandHandler";
 
 interface CreateProductBodyParams {
@@ -20,13 +24,16 @@ interface CreateProductBodyParams {
 export class ProductController {
   private productRepository: ProductRepository;
   private shopAuthenticationService: ShopAuthenticationService;
-  
+
   constructor() {
     this.productRepository = new PrismaProductRepository();
     this.shopAuthenticationService = new CookieShopAuthenticationService();
   }
 
-  public async getProducts(request: Request, response: Response): Promise<Response> {
+  public async getProducts(
+    request: Request,
+    response: Response
+  ): Promise<Response> {
     const usecase = new PrismaGetProductsQueryHandler();
     try {
       const result = await usecase.handle();
@@ -40,7 +47,10 @@ export class ProductController {
     }
   }
 
-  public async createProduct(request: TypedRequestBody<CreateProductBodyParams>, response: Response): Promise<Response> {
+  public async createProduct(
+    request: TypedRequestBody<CreateProductBodyParams>,
+    response: Response
+  ): Promise<Response> {
     const usecase = new CreateProductCommandHandler(this.productRepository);
     const shop = await this.shopAuthenticationService.shopFrom(request);
     const command = new CreateProductCommand(
@@ -49,10 +59,10 @@ export class ProductController {
       request.body.productDescription,
       request.body.category,
       request.body.productOptions,
-      request.body.stockKeepingProducts,
+      request.body.stockKeepingProducts
     );
     usecase.handle(command);
-    
-    return response.json({ message: 'done' });
+
+    return response.json({ message: "done" });
   }
 }

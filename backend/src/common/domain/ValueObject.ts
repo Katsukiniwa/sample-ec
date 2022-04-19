@@ -6,13 +6,13 @@ interface ValueObjectProps {
 export abstract class ValueObject<T extends ValueObjectProps> {
   public props: T;
 
-  constructor (props: T) {
-    const baseProps = { ...props }
+  constructor(props: T) {
+    const baseProps = { ...props };
 
     this.props = baseProps;
   }
 
-  public equals (vo?: ValueObject<T>) : boolean {
+  public equals(vo?: ValueObject<T>): boolean {
     if (vo === null || vo === undefined) {
       return false;
     }

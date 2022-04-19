@@ -13,7 +13,7 @@ export class PrismaProductRepository implements ProductRepository {
     await this.prisma.products.findUnique({
       where: {
         id: product.id,
-      }
+      },
     });
   }
 }

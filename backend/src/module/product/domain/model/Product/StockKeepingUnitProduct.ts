@@ -2,7 +2,7 @@ import { Entity } from "../../../../../common/domain/Entity";
 
 export interface StockKeepingUnitProductProps {
   id: string;
-  optionValues: { name: string; value: string }[]
+  optionValues: { name: string; value: string }[];
   stock: number;
   price: number;
 }

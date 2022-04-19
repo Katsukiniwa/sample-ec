@@ -8,7 +8,7 @@ interface ProductOptionProps {
 /**
  * @name 商品オプション
  * @description 商品が持つオプション
- * 
+ *
  * name: サイズ・S/M/L, カラー・White/Black
  * name: 種類, 1月/2月/.../12月
  */

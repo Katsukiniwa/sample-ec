@@ -14,7 +14,7 @@ export class Shop extends AggregateRoot<Shop> {
     this.id = props.id;
     this._name = props.name;
   }
-  
+
   get name(): string {
     return this._name;
   }

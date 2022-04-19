@@ -10,7 +10,7 @@ export class DomainEvents {
   private static handlersMap = {};
   private static markedAggregates: AggregateRoot<any>[] = [];
 
-  public static markAggregateForDispatch (aggregate: AggregateRoot<any>): void {
+  public static markAggregateForDispatch(aggregate: AggregateRoot<any>): void {
     const aggregateFound = !!this.findMarkedAggregateByID(aggregate.id);
 
     if (!aggregateFound) {
@@ -18,24 +18,28 @@ export class DomainEvents {
     }
   }
 
-  private static dispatchAggregateEvents (aggregate: AggregateRoot<any>): void {
-    aggregate.domainEvents.forEach((event: DomainEvent) => this.dispatch(event));
+  private static dispatchAggregateEvents(aggregate: AggregateRoot<any>): void {
+    aggregate.domainEvents.forEach((event: DomainEvent) =>
+      this.dispatch(event)
+    );
   }
 
-  private static removeAggregateFromMarkedDispatchList (aggregate: AggregateRoot<any>): void {
+  private static removeAggregateFromMarkedDispatchList(
+    aggregate: AggregateRoot<any>
+  ): void {
     const index = this.markedAggregates.findIndex((a) => a.equals(aggregate));
     this.markedAggregates.splice(index, 1);
   }
 
-  private static findMarkedAggregateByID (id: string): AggregateRoot<any> {
-    const result = this.markedAggregates.find(e => e.id === id);
+  private static findMarkedAggregateByID(id: string): AggregateRoot<any> {
+    const result = this.markedAggregates.find((e) => e.id === id);
     if (!result) {
-      throw new Error('aggregate not found');
+      throw new Error("aggregate not found");
     }
     return result;
   }
 
-  public static dispatchEventsForAggregate (id: string): void {
+  public static dispatchEventsForAggregate(id: string): void {
     const aggregate = this.findMarkedAggregateByID(id);
 
     if (aggregate) {
@@ -45,8 +49,13 @@ export class DomainEvents {
     }
   }
 
-  public static register(callback: (event: DomainEvent) => void, eventClassName: string): void {
-    if (!Object.prototype.hasOwnProperty.call(this.handlersMap, eventClassName)) {
+  public static register(
+    callback: (event: DomainEvent) => void,
+    eventClassName: string
+  ): void {
+    if (
+      !Object.prototype.hasOwnProperty.call(this.handlersMap, eventClassName)
+    ) {
       // @ts-ignore
       this.handlersMap[eventClassName] = [];
     }
@@ -62,10 +71,12 @@ export class DomainEvents {
     this.markedAggregates = [];
   }
 
-  private static dispatch (event: DomainEvent): void {
+  private static dispatch(event: DomainEvent): void {
     const eventClassName = event.constructor.name;
 
-    if (Object.prototype.hasOwnProperty.call(this.handlersMap, eventClassName)) {
+    if (
+      Object.prototype.hasOwnProperty.call(this.handlersMap, eventClassName)
+    ) {
       // @ts-ignore
       const handlers: any[] = this.handlersMap[eventClassName];
       for (const handler of handlers) {
